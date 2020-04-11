@@ -46,9 +46,8 @@ public  interface PostmanAPI {
     @FormUrlEncoded
     @POST("Server/api/material")
     Call<material>creatematerial(
-            @Field("id") int id,
             @Field("colour") String colour,
-            @Field("quality") String quality,
+            @Field("quality") int quality,
             @Field("description") String description,
             @Field ("cost_price_per_m") Double cost_price_per_m,
             @Field("original_length") Double original_length,

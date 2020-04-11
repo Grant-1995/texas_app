@@ -96,11 +96,11 @@ public class Report extends AppCompatActivity {
     private void creatematerial()
         {
          //   material Material = new material();
-            Map<String, String> fields = new HashMap<>();
-            fields.put("id","100");
-            fields.put("first_name", "J");
+      //      Map<String, String> fields = new HashMap<>();
+        //    fields.put("id","100");
+       //     fields.put("first_name", "J");
 //        Call<Post> call = PostmanAPI.createPost(fields);
-            Call<material> call = PostmanAPI.creatematerial(6,"white","B","viscos",51.50,100.6,  40.23, "2020","b432","China" );
+            Call<material> call = PostmanAPI.creatematerial("white",5,"viscos",51.50,100.6,  40.23, "2020-02-02","b432","China" );
             call.enqueue(new Callback<material>() {
                 @Override
                 public void onResponse(Call<material> call, Response<material> response) {
@@ -213,7 +213,7 @@ public class Report extends AppCompatActivity {
     }
     private void updatematerial()
     {
-        material Material = new material("white","6","viscos",4.4,51.50,100.6,  "2020", "B43","China");
+        material Material = new material("white","6","viscos",4.4,51.50,100.6,  "2020-02-02", "B43","China");
         Call<material>call =PostmanAPI.putmaterial(Material);
         call.enqueue(new Callback<material>() {
             @Override
