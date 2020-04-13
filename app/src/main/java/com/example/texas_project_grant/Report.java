@@ -3,6 +3,9 @@ package com.example.texas_project_grant;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -23,6 +26,8 @@ import retrofit2.http.Field;
 
 public class Report extends AppCompatActivity {
     private TextView txt_res;
+    private EditText edt_desc;
+    private Button Btn_enter;
     private PostmanAPI PostmanAPI;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,8 @@ public class Report extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
+        edt_desc = findViewById(R.id.edt_desc);
+        Btn_enter = findViewById(R.id.Btn_enter);
         txt_res = findViewById(R.id.txt_res);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -46,9 +53,16 @@ public class Report extends AppCompatActivity {
 
          PostmanAPI = retrofit.create(PostmanAPI.class);
     //    getposts();
-        //getmataterial();
 
-        creatematerial();
+        Btn_enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getmataterial();
+            }
+        });
+
+
+        //creatematerial();
       //  updatematerial();
 
 
@@ -56,7 +70,9 @@ public class Report extends AppCompatActivity {
     }
     private void getmataterial()
     {
-        Call<List<material>> call = PostmanAPI.getmaterial("Viscos");
+        String desc = edt_desc.getText() + "";
+        Call<List<material>> call = PostmanAPI.getmaterial(desc);
+
         //   Call<List<Post>> call2 = PostmanAPI.getPosts("Josh","id","desc");
         call.enqueue(new Callback<List<material>>() {
             @Override

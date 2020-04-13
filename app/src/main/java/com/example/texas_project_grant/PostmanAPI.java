@@ -24,7 +24,7 @@ public  interface PostmanAPI {
     );
     @GET("Server/api/material")
     Call<List<material>>getmaterial(
-            @Query("text") String text
+            @Query("description") String description
     );
 
     @POST("Server/api/getemployee")
