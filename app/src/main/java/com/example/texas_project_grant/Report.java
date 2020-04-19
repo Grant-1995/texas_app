@@ -44,6 +44,7 @@ public class Report extends AppCompatActivity {
         Btn_enter = findViewById(R.id.Btn_enter);
         txt_res = findViewById(R.id.txt_res);
 
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://texas-server.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -63,7 +64,7 @@ public class Report extends AppCompatActivity {
 
 
         //creatematerial();
-      //  updatematerial();
+       // updateLength();
 
 
 
@@ -227,15 +228,19 @@ public class Report extends AppCompatActivity {
         });
 
     }
-    private void updatematerial()
+
+
+    public void updateLength(int id, Double length,final TextView txt)
     {
-        material Material = new material("white","6","viscos",4.4,51.50,100.6,  "2020-02-02", "B43","China");
-        Call<material>call =PostmanAPI.putmaterial(Material);
+        System.out.println(id+"");
+        System.out.println(length+ "");
+
+        Call<material>call = PostmanAPI.updateLength(id,length);
         call.enqueue(new Callback<material>() {
             @Override
             public void onResponse(Call<material> call, Response<material> response) {
                 if (!response.isSuccessful()){
-                    txt_res.setText("Code" + response.code());
+                   txt.setText("Code" + response.code());
                     return;
 
                 }
@@ -256,12 +261,12 @@ public class Report extends AppCompatActivity {
                 content += "country_of_origin: " +materialResponse.getCountry_of_origin() + "\n\n";
 
 
-                txt_res.append(content);
+               txt.append(content);
             }
 
             @Override
             public void onFailure(Call<material> call, Throwable t) {
-                txt_res.append(t.getMessage());
+             txt.append(t.getMessage());
 
             }
         });

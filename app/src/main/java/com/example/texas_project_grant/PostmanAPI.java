@@ -26,6 +26,13 @@ public  interface PostmanAPI {
     Call<List<material>>getmaterial(
             @Query("description") String description
     );
+    @GET("Server/api/getid")
+    Call<List<material>>getid(
+            @Query("material_id") int material_id
+    );
+
+
+
 
     @POST("Server/api/getemployee")
     Call<Post>CreatePost(@Body Post post);
@@ -64,6 +71,14 @@ public  interface PostmanAPI {
 
     @PUT("Server/api/material")
     Call<material> putmaterial(@Body material Material);
+
+    @GET("Server/api/Updatematerial")
+    Call<material> updateLength(
+            @Query("material_id") int material_id,
+            @Query("length") Double length
+
+    );
+
 
     @PATCH("Server/api/material")
     Call<material> patchPost(@Body material Material);

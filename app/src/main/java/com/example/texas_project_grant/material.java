@@ -1,7 +1,7 @@
 package com.example.texas_project_grant;
 
 public class material {
-    private int id;
+    private int material_id;
     private String colour;
     private String  quality;
     private String description;
@@ -12,7 +12,8 @@ public class material {
     private String shelf_code;
     private String country_of_origin;
 
-    public material(String colour, String quality, String description, Double cost_price_per_m, Double original_length, Double current_length, String date_purchased, String shelf_code, String country_of_origin) {
+    public material(int material_id, String colour, String quality, String description, Double cost_price_per_m, Double original_length, Double current_length, String date_purchased, String shelf_code, String country_of_origin) {
+        this.material_id = material_id;
         this.colour = colour;
         this.quality = quality;
         this.description = description;
@@ -25,7 +26,7 @@ public class material {
     }
 
     public int getId() {
-        return id;
+        return material_id;
     }
 
     public String getColour() {

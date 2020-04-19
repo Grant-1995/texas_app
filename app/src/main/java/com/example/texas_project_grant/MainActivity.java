@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView txtAt1 = (TextView)findViewById(R.id.txtAt1);
         BtnLookup = (Button)findViewById(R.id.BtnLookup);
         Btn_report = (Button)findViewById(R.id.Btn_report);
         BtnScan = (Button) findViewById(R.id.BtnScan);
