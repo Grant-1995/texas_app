@@ -1,5 +1,11 @@
 package com.example.texas_project_grant;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +32,11 @@ public  interface PostmanAPI {
     Call<List<material>>getmaterial(
             @Query("description") String description
     );
+
+    @GET("Server/api/material")
+    Call<List<material>>getallmaterial(
+    );
+
     @GET("Server/api/getid")
     Call<List<material>>getid(
             @Query("material_id") int material_id
@@ -66,7 +77,7 @@ public  interface PostmanAPI {
 
     @FormUrlEncoded
     @POST("Server/api/getemployee")
-    Call<Post>createPost(@FieldMap Map<String, String> fields);
+    Call<Post>createPost(@Body material Material);
 
 
     @PUT("Server/api/material")
@@ -78,9 +89,14 @@ public  interface PostmanAPI {
             @Query("length") Double length
 
     );
+    @GET("Server/api/distinctmaterial")
+    Call<List<JSONArray>> readJson();
+
+
 
 
     @PATCH("Server/api/material")
     Call<material> patchPost(@Body material Material);
+
 
 }

@@ -40,7 +40,14 @@ public class MainActivity extends AppCompatActivity {
         BtnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity_qrGen();
+                openActivity_upload();
+            }
+        });
+
+        Btn_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity_report();
             }
         });
 
@@ -100,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
     public void openActivity_report()
     {
         Intent intent = new Intent(this,Report.class);
+        startActivity(intent);
+    }
+    public void openActivity_upload()
+    {
+        Intent intent = new Intent(this,upload.class);
         startActivity(intent);
     }
 }

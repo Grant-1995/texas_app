@@ -1,9 +1,18 @@
 package com.example.texas_project_grant;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,6 +20,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Array;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +40,7 @@ public class Report extends AppCompatActivity {
     private EditText edt_desc;
     private Button Btn_enter;
     private PostmanAPI PostmanAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +75,7 @@ public class Report extends AppCompatActivity {
         });
 
 
-        //creatematerial();
+
        // updateLength();
 
 
@@ -85,9 +97,12 @@ public class Report extends AppCompatActivity {
                 }
                 List<material> materials = response.body();
 
-                for(material Material : materials){
+                for(final material Material : materials){
+                    ForegroundColorSpan fcsGray =  new ForegroundColorSpan(Color.GRAY);
                     String content = "";
-                    content += "id: "+ Material.getId() + "\n";
+
+                    String id = "id: "+ Material.getId() + "\n";
+                    content +=id;
                     content += "colour: " + Material.getColour() + "\n";
                     content += "quality: " +Material.getQuality() + "\n";
                     content += "description: " +Material.getDescription() + "\n";
@@ -98,8 +113,26 @@ public class Report extends AppCompatActivity {
                     content += "shelf_code: " +Material.getShelf_code() + "\n";
                     content += "country_of_origin: " +Material.getCountry_of_origin() + "\n\n";
 
-                    txt_res.append(content);
+                    SpannableString ss = new SpannableString(content);
+                    ClickableSpan clickableSpan = new ClickableSpan() {
+                        @Override
+                        public void onClick(@NonNull View widget) {
+                            Intent scanInfo = new Intent(getBaseContext(),scan.class);
+                            String id = Material.getId() + "";
+                            scanInfo.putExtra("scan results", id);
+                            startActivity(scanInfo);
+
+                        }
+                    };
+                    ss.setSpan(fcsGray, 3,id.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    ss.setSpan(clickableSpan,3,id.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+                    txt_res.append(ss);
+
+
                 }
+                txt_res.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
             @Override
@@ -110,19 +143,19 @@ public class Report extends AppCompatActivity {
     }
 
 
-    private void creatematerial()
+    public void creatematerial(PostmanAPI PostmanAPI, String col, int qual, String desc, Double cost, Double original, Double current, String date, String shelf, String country)
         {
          //   material Material = new material();
       //      Map<String, String> fields = new HashMap<>();
         //    fields.put("id","100");
        //     fields.put("first_name", "J");
 //        Call<Post> call = PostmanAPI.createPost(fields);
-            Call<material> call = PostmanAPI.creatematerial("white",5,"viscos",51.50,100.6,  40.23, "2020-02-02","b432","China" );
+            Call<material> call = PostmanAPI.creatematerial(col,qual,desc,cost,original,  current, date,shelf,country);
             call.enqueue(new Callback<material>() {
                 @Override
                 public void onResponse(Call<material> call, Response<material> response) {
                     if (!response.isSuccessful()){
-                        txt_res.setText("Code" + response.code());
+
                         return;
 
                     }
@@ -143,12 +176,12 @@ public class Report extends AppCompatActivity {
                     content += "country_of_origin: " +materialResponse.getCountry_of_origin() + "\n\n";
 
 
-                    txt_res.append(content);
+
                 }
 
                 @Override
                 public void onFailure(Call<material> call, Throwable t) {
-                    txt_res.append(t.getMessage());
+
 
                 }
             });
@@ -308,6 +341,52 @@ public class Report extends AppCompatActivity {
     }
 */
 
+    public void distmataterial(AutoCompleteTextView AC_colour, AutoCompleteTextView AC_shelf_code, AutoCompleteTextView AC_description,AutoCompleteTextView AC_country_of_origin)
+    {
+        String colour[] = new String[]{};
+        String description[] = new String[]{};
+        String shelf_code[] = new String[]{};
+        String country_of_origin[] = new String[]{};
+        Call<List<material>> call = PostmanAPI.getallmaterial();
 
+        //   Call<List<Post>> call2 = PostmanAPI.getPosts("Josh","id","desc");
+        call.enqueue(new Callback<List<material>>() {
+
+            @Override
+            public void onResponse(Call<List<material>> call, Response<List<material>> response) {
+                if (!response.isSuccessful()){
+
+                    return;
+
+                }
+                List<material> materials = response.body();
+
+
+                for(material Material : materials){
+                    String colour[] = new String[]{};
+                    String description[] = new String[]{};
+                    String shelf_code[] = new String[]{};
+                    String country_of_origin[] = new String[]{};
+                    int i = 0;
+                   colour[i] = Material.getColour() ;
+                   description[i] = Material.getDescription();
+                    shelf_code[i] = Material.getShelf_code();
+                    country_of_origin[i] = Material.getCountry_of_origin();
+                    i++;
+
+
+
+                }
+
+
+            }
+
+
+            @Override
+            public void onFailure(Call<List<material>> call, Throwable t) {
+                txt_res.setText(t.getMessage());
+            }
+        });
+    }
 
 }

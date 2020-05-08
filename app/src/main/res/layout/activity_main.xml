@@ -45,8 +45,10 @@
 
     <Button
         android:id="@+id/BtnScan"
+
         android:layout_width="129dp"
         android:layout_height="101dp"
+        android:background =  "@drawable/qrcode"
         android:text="Scan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

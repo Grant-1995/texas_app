@@ -27,7 +27,6 @@ public class scan extends AppCompatActivity {
     private PostmanAPI PostmanAPI;
     private TextView textView7;
     private EditText edt_len;
-    private Button btn_enterrrr;
     public Button button3;
 
     @Override
@@ -42,8 +41,6 @@ public class scan extends AppCompatActivity {
                 .addInterceptor(loggingInterceptor)
                 .build();
 
-        btn_enterrrr = findViewById(R.id.btn_enter);
-        Button bt2 = (Button) findViewById(R.id.bt2);
 
 
 
@@ -111,21 +108,6 @@ public class scan extends AppCompatActivity {
 
                     }
                 });
-            }
-        });
-
-
-
-        bt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("HELLO", "Register Button Clicked");
-                System.out.println("hekjfdsklfjs");
-                textView7 = (TextView) findViewById(R.id.textView7);
-                textView7.setText("dsffds");
-         //       Report rep = new Report();
-       //         Double len = Double.parseDouble(edt_len.getText() + "");
-        //        rep.updateLength(id,len,textView7);
             }
         });
 
