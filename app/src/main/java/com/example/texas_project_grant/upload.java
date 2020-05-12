@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -103,7 +104,7 @@ public class upload extends AppCompatActivity {
                 .build();
         PostmanAPI = retrofit.create(PostmanAPI.class);
 
-        //distmat();
+        distmat();
        btn_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,55 +125,51 @@ public class upload extends AppCompatActivity {
 
 
     }
-    /*
+
     public void distmat()
     {
-        Call<List<JSONArray>> jsonCall = PostmanAPI.readJson();
-        jsonCall.enqueue(new Callback<List<JSONArray>>() {
+        final Call<List<String[]>> listCall = PostmanAPI.readJson();
+        listCall.enqueue(new Callback<List<String[]>>() {
             @Override
-            public void onResponse(Call<List<JSONArray>> call, Response<List<JSONArray>> response) {
-                List<String> responseList = new ArrayList<String>();
-                List<JSONArray> json = response.body();
-
-
-
-
-                for (int i = 0; i < json.size(); i++) {
-                    JSONArray list = json.get(i);
-
-                    for (int u = 0; u < list.length(); u++)
-                    {
-
-                        try {
-                            responseList.add(list.getString(i));
-                            System.out.println(list.getString(i));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-             //       JsonArray j = e.get("description");
-                //    String r  = j.getAsString();
-                    System.out.println(r + "hello");
-
-              //      String discrip = j.getAsString();
-               //     responseList.add(discrip);
-              //      System.out.println(e);
-
-                    ArrayList<String> listdata = new ArrayList<String>();
-
-
-
+            public void onResponse(Call<List<String[]>> call, Response<List<String[]>> response) {
+                if (!response.isSuccessful()){
+                    System.out.println("un");
+                    return;
                 }
-                System.out.println(response.body().toString());
+                List<String[]> distinct = response.body();
+
+
+                String[] discription = distinct.get(0);
+                String[] colour = distinct.get(1);
+                String[] shelf_code = distinct.get(2);
+                String[] country = distinct.get(3);
+
+
+
+                ArrayAdapter<String> adapter_disc =  new ArrayAdapter<String>(upload.this,
+                        android.R.layout.simple_list_item_1,discription);
+                edtdesc.setAdapter(adapter_disc);
+
+                ArrayAdapter<String> adapter_col =  new ArrayAdapter<String>(upload.this,
+                        android.R.layout.simple_list_item_1,colour);
+                edtcol.setAdapter(adapter_col);
+
+                ArrayAdapter<String> adapter_shelf =  new ArrayAdapter<String>(upload.this,
+                        android.R.layout.simple_list_item_1,shelf_code);
+                edtshelf.setAdapter(adapter_shelf);
+
+                ArrayAdapter<String> adapter_country =  new ArrayAdapter<String>(upload.this,
+                        android.R.layout.simple_list_item_1,country);
+                edtcountry.setAdapter(adapter_country);
             }
 
             @Override
-            public void onFailure(Call<List<JSONArray>> call, Throwable t) {
+            public void onFailure(Call<List<String[]>> call, Throwable t) {
 
             }
         });
-    }*/
+    }
+
     public void distmataterial()
     {
 

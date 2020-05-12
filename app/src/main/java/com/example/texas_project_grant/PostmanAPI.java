@@ -90,7 +90,7 @@ public  interface PostmanAPI {
 
     );
     @GET("Server/api/distinctmaterial")
-    Call<List<JSONArray>> readJson();
+    Call<List<String[]>> readJson();
 
 
 
